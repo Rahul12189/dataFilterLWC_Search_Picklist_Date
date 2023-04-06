@@ -1,0 +1,46 @@
+<template>
+    <lightning-card title="Opportunity Data" icon-name="standard:opportunity">
+        <div class="c-container">
+            <lightning-layout  horizontal-align="space">
+                <lightning-layout-item size="2" padding="around-small">
+                    <div class="custom-box"><lightning-input type="date" value={startDate} name="startDate" label="Enter Start Date" onchange={handleChangeAction}></lightning-input></div>
+                </lightning-layout-item>
+                <lightning-layout-item size="2" padding="around-small">
+                    <div class="custom-box"><lightning-input type="date" value={endDate} name="endDate" label="Enter End Date" onchange={handleChangeAction}></lightning-input></div>
+                </lightning-layout-item>
+                <lightning-layout-item size="2" padding="around-small">
+                    <lightning-button variant="brand" label="Apply" title="Primary action" onclick={handleApply} class="slds-m-left_x-small"></lightning-button>
+                    <lightning-button variant="brand-outline" label="Clear" title="Primary action" onclick={handleClear} class="slds-m-left_x-small"></lightning-button>
+                </lightning-layout-item>
+                <lightning-layout-item size="2" padding="around-small">
+                    <div class="custom-box"><lightning-combobox
+                        name="progress"
+                        label="Stage"
+                        value={value}
+                        placeholder="Select Stage"
+                        options={options}
+                        onchange={handleStageChange} ></lightning-combobox></lightning-input></div>
+                </lightning-layout-item>
+                <lightning-layout-item size="2" padding="around-small">
+                    <div class="custom-box"><lightning-input type="search" label="Search Opportunity" onchange={handleSearch}></lightning-input></div>
+                </lightning-layout-item>
+            </lightning-layout>
+            <template if:true={data}>
+                <lightning-datatable key-field="Id" 
+                                     data={data} 
+                                     columns={columns} 
+                                     sorted-by={sortBy}
+                                     sorted-direction={sortDirection}
+                                     onsort={doSorting}
+                                     draft-values={saveDraftValue}
+                                     onsave={handleSave}
+                                     show-row-number-column="true" 
+                                     onrowaction={handleRowAction}>
+                </lightning-datatable>
+            </template>
+            <template if:true={error}>
+                {error}>
+            </template>
+        </div>
+    </lightning-card>
+</template>
