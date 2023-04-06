@@ -1,0 +1,93 @@
+@isTest (SeeAllData = FALSE)
+public class dataFilterTestClass{
+
+	@testSetup static void methodName(){
+
+	Opportunity opp1 = new Opportunity(Name='United Arab Emirates', StageName='Qualified', CloseDate=Date.newInstance(2023, 03, 26), Probability=60);
+        Opportunity opp2 = new Opportunity(Name='USA', StageName='Closed Won', CloseDate=Date.newInstance(2023, 03, 20), Probability=70);
+        Opportunity opp3 = new Opportunity(Name='India', StageName='Closed Lost', CloseDate=Date.newInstance(2023, 03, 25), Probability=90);
+        Opportunity opp4 = new Opportunity(Name='Australia', StageName='Negotiation', CloseDate=Date.newInstance(2023, 03, 18), Probability=100);
+
+	insert opp1;	
+        insert opp2;	
+        insert opp3;	
+        insert opp4;		
+
+	}
+
+	//********************Date Filter Function Test**************************************
+
+	@istest static void test_retriveFilterDate(){
+        Test.startTest();
+		date startDate =Date.newInstance(2023, 03, 16);
+		date endDate = Date.newInstance(2023, 04,30);
+        try{
+		List<Opportunity> obj1 = DataController.dateFilter(startDate,endDate);
+            System.debug(obj1); }
+        catch(exception e){
+            system.debug(e);
+        }
+        
+		Test.stopTest();
+	}
+    
+ 	//****************************Sort Function Test***************************
+ 	
+	@istest static void retrieveOpportunities(){
+        Test.startTest();
+		String field = 'Name';
+		String sortOrder = 'ASC';
+        try{
+		List<Opportunity> obj2 = DataController.retrieveOpportunities(field,sortOrder);
+            System.debug(obj2); }
+        catch(exception e){
+            system.debug(e);
+        }
+        Test.stopTest();
+
+	}
+    
+    //******************Save Updated Values Test******************************
+    
+    @istest static void saveEdits(){
+        Test.startTest();
+        try{
+		String obj3 = DataController.updatedOpportunityDetails(Opportunity.Probability);
+            System.debug(obj3); }
+        catch(exception e){
+            system.debug(e);
+        }
+        Test.stopTest();
+
+	}
+    
+    @istest static void saveEditsNew(){
+        Opportunity opp5 = new Opportunity(Name='Egypt', StageName='Signing', CloseDate=Date.newInstance(2023, 03, 27), Probability=40);
+		insert opp5;
+        Test.startTest();
+        try{
+		String obj4 = DataController.updatedOpportunityDetails(opp5.StageName='Qualified');
+            System.debug(obj4); }
+        catch(exception e){
+            system.debug(e);
+        }
+        Test.stopTest();
+
+	}
+    
+    @istest static void saveEditsNew2(){
+        Opportunity opp6 = new Opportunity(Name='Egypt', StageName='Signing', CloseDate=Date.newInstance(2023, 03, 27), Probability=40);
+		insert opp6;
+        Test.startTest();
+        try{
+		String obj5 = DataController.updatedOpportunityDetails(opp6.StageName);
+            System.debug(obj5); }
+        catch(exception e){
+            system.debug(e);
+        }
+        Test.stopTest();
+
+	}
+    
+   
+}
